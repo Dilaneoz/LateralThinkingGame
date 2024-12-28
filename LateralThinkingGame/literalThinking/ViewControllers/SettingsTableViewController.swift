@@ -21,7 +21,7 @@ class SettingsTableViewController: UITableViewController {
         self.navigationItem.scrollEdgeAppearance = appearance
         self.navigationItem.standardAppearance = appearance // bunların altta olması gerekiyor, navigation kodlarının üstünde olunca çalışmıyor navigation kodları. bunun sebebi self.navigationItem'ın tam olarak yüklenmesi ve konfigüre edilmesinden sonra appearance yapılandırmalarının uygulanması gerekmesi
 
-        tableView.separatorStyle = .none
+        
     }
 }
     
