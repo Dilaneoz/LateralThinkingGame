@@ -30,6 +30,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		22649CEE2D21CB7100C30E3F /* Exceptions for "Music" folder in "literalThinking" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				music.mp3,
+			);
+			target = 22A711FD2CC182F60011B2E9 /* literalThinking */;
+		};
+		22649CEF2D21CB7100C30E3F /* Exceptions for "Music" folder in "literalThinkingTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				music.mp3,
+			);
+			target = 22A712132CC182F70011B2E9 /* literalThinkingTests */;
+		};
 		22A712262CC182F80011B2E9 /* Exceptions for "literalThinking" folder in "literalThinking" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -40,6 +54,15 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		22649CE72D21CA4B00C30E3F /* Music */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				22649CEE2D21CB7100C30E3F /* Exceptions for "Music" folder in "literalThinking" target */,
+				22649CEF2D21CB7100C30E3F /* Exceptions for "Music" folder in "literalThinkingTests" target */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		22A712002CC182F60011B2E9 /* literalThinking */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -89,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				22A712002CC182F60011B2E9 /* literalThinking */,
+				22649CE72D21CA4B00C30E3F /* Music */,
 				22A712172CC182F70011B2E9 /* literalThinkingTests */,
 				22A712212CC182F80011B2E9 /* literalThinkingUITests */,
 				22A711FF2CC182F60011B2E9 /* Products */,
@@ -167,6 +191,7 @@
 				22A712202CC182F80011B2E9 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				22649CE72D21CA4B00C30E3F /* Music */,
 				22A712212CC182F80011B2E9 /* literalThinkingUITests */,
 			);
 			name = literalThinkingUITests;

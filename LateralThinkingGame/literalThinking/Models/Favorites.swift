@@ -27,6 +27,11 @@ struct ScenariosItem: Codable { // FavoritesCollectionViewController'dan cell e 
     let gameScenario: String
     let backImage: String
     let frontImage: String
+    let titleColor: ColorWrapper // Renk özelliği
+    let lableColor: ColorWrapper
+    let solutionButtonColor: ColorWrapper
+    let solutionButtonFrameColor: ColorWrapper
+    let checkmarkButtonColor: ColorWrapper
 }
 
 //UIColor doğrudan Codable uyumlu değildir. Ancak, Codable uyumunu sağlamak için renkleri Data formatında saklayabiliriz. Bunun için aşağıdaki gibi bir Codable uzantısı kullanmak lazım. bunu yukarıaki "let titleColor: ColorWrapper" satırı için yapıyoruz

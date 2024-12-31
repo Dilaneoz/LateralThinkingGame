@@ -41,27 +41,27 @@ class ScenariosViewController: UIViewController {
     [],
     []]
     
-    let solutionTitleColor: [[UIColor]] = [[.black, .black, .systemBackground],
-    [.systemBackground, .systemBackground, .black],
-    [.systemBackground, .systemBackground, .black],
+    let solutionTitleColor: [[UIColor]] = [[.black, .black, .white],
+    [.white, .systemBackground, .black],
+    [.white, .white, .black],
     [],
     []]
     
-    let solutionLabelColor: [[UIColor]] = [[.black, .black, .systemBackground],
-    [.systemBackground, .systemBackground, .black],
-    [.systemBackground, .systemBackground, .black],
+    let solutionLabelColor: [[UIColor]] = [[.black, .black, .white],
+    [.white, .white, .black],
+    [.white, .white, .black],
     [],
     []]
     
-    let shareButtonColor: [[UIColor]] = [[.black, .black, .systemBackground],
-    [.systemBackground, .systemBackground, .black],
-    [.systemBackground, .systemBackground, .black],
+    let shareButtonColor: [[UIColor]] = [[.black, .black, .white],
+    [.white, .white, .black],
+    [.white, .white, .black],
     [],
     []]
     
-    let markAsSolved: [[UIColor]] = [[.black, .black, .systemBackground],
-    [.systemBackground, .systemBackground, .black],
-    [.systemBackground, .systemBackground, .black],
+    let markAsSolved: [[UIColor]] = [[.black, .black, .white],
+    [.white, .white, .black],
+    [.white, .white, .black],
     [],
     []]
 
@@ -117,9 +117,18 @@ class ScenariosViewController: UIViewController {
             // Gerekirse verilerinizi burada işleyin
         }
         
-        
-        
+        // Switch durumunu kontrol et
+        let isSwitchOn = UserDefaults.standard.bool(forKey: "switch_0") // switch butonu açık ise 
+        if isSwitchOn {
+            MusicPlayer.shared.playMusic(named: "music", fileType: "mp3") // Müzik çalmaya başla
+        } else {
+            MusicPlayer.shared.stopMusic() // Müziği durdur
+        }
     }
+    
+   
+
+
     
     
     @IBAction func solutionButtonClicked(_ sender: Any) {
@@ -180,4 +189,5 @@ class ScenariosViewController: UIViewController {
     }
     
     
+
 }

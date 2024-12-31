@@ -26,6 +26,8 @@ class SolutionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.tintColor = .white
 
         if let solutionImageView = solutionImageView {
             solutionsImageView.image = UIImage(named: solutionImageView)
@@ -46,7 +48,9 @@ class SolutionsViewController: UIViewController {
         markAsSolvedButton.setImage(UIImage(systemName: newImageName), for: .normal)
         markAsSolvedButton.setTitle(" Mark As Solved", for: .normal)
         
+        
     }
+    
     
     
     @IBAction func markAsSolvedButtonClicked(_ sender: Any) {

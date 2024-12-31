@@ -19,13 +19,16 @@ class FavoritesCollectionViewController: UICollectionViewController {
         self.navigationItem.scrollEdgeAppearance = appearance
         self.navigationItem.standardAppearance = appearance // bunların altta olması gerekiyor, navigation kodlarının üstünde olunca çalışmıyor navigation kodları. bunun sebebi self.navigationItem'ın tam olarak yüklenmesi ve konfigüre edilmesinden sonra appearance yapılandırmalarının uygulanması gerekmesi
     
-      
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        DetailsCollectionViewController.loadFavoritesFromUserDefaults()
+        if MusicPlayer.shared.isPlaying { // eğer müzik çalıyorsa
+            MusicPlayer.shared.fadeOutMusic() // müziğin sesini azaltarak durdur
+        }
+        
+        FavoriteManager.loadFavoritesFromUserDefaults()
         
         collectionView.reloadData()
     }
@@ -38,11 +41,11 @@ class FavoritesCollectionViewController: UICollectionViewController {
             let indexPath = collectionView.indexPath(for: cell) else { return }
 
         // İlgili item'ı FavoritesCollectionViewController'dan kaldır
-        DetailsCollectionViewController.favoritesList.remove(at: indexPath.row)
+        FavoriteManager.favoritesList.remove(at: indexPath.row)
 
         sender.setImage(UIImage(systemName: "star"), for: .normal) // Butonun resmini "star" (içi boş yıldız) yap. bunu NotificationCenter ile DetailsCollectionViewController bildiricez ve DetailsCollectionViewController'daki favori butonu star.fill'den star a dönüşecek
         
-        DetailsCollectionViewController.saveFavoritesToUserDefaults() // Değişiklikleri kaydet
+        FavoriteManager.saveFavoritesToUserDefaults() // Değişiklikleri kaydet
         
         collectionView.deleteItems(at: [indexPath]) // Favori butonuna tıklayıp ilgili cell i kaldırdığımızda, cell'i controllerdan hemen silmek için
         
@@ -56,17 +59,6 @@ class FavoritesCollectionViewController: UICollectionViewController {
 
 extension FavoritesCollectionViewController: UICollectionViewDelegateFlowLayout  {
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
 
@@ -76,21 +68,21 @@ extension FavoritesCollectionViewController: UICollectionViewDelegateFlowLayout 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return DetailsCollectionViewController.favoritesList.count
+        return FavoriteManager.favoritesList.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
    
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FavoritesCollectionViewCell
             
-        let detailsItem = DetailsCollectionViewController.favoritesList[indexPath.row]
+        let detailsItem = FavoriteManager.favoritesList[indexPath.row]
             cell.favoritesImageView.image = UIImage(named: detailsItem.detailsItem.imageName)
             cell.favoritesLabel.text = detailsItem.detailsItem.title
             cell.favoritesLabel.textColor = detailsItem.detailsItem.titleColor.color // label renklerini detailsviewcontrollerda olduğu gibi aktarıyoruz
 
         
         cell.favoriteButton.setImage(UIImage(systemName: "star.fill"), for: .normal) // Butonun default halini "star.fill" (dolu yıldız) olarak ayarlıyoruz
-        cell.favoriteButton.tintColor = .systemIndigo
+      //  cell.favoriteButton.tintColor = .tintColor
         
         return cell
     }
@@ -119,7 +111,7 @@ extension FavoritesCollectionViewController: UICollectionViewDelegateFlowLayout 
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { // ScenariosViewController'a aktarılma
     
-        let selectedFavorite = DetailsCollectionViewController.favoritesList[indexPath.row] // Favori itemini al
+        let selectedFavorite = FavoriteManager.favoritesList[indexPath.row] // Favori itemini al
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil) // Storyboard'dan ScenariosViewController'ı oluştur
         if let scenariosVC = storyboard.instantiateViewController(withIdentifier: "ScenariosViewController") as? ScenariosViewController {
@@ -132,42 +124,16 @@ extension FavoritesCollectionViewController: UICollectionViewDelegateFlowLayout 
             scenariosVC.gameScenario = selectedFavorite.scenarioDetails.gameScenario 
             scenariosVC.scenariosImages = selectedFavorite.scenarioDetails.backImage
             scenariosVC.visualImages = selectedFavorite.scenarioDetails.frontImage
+            scenariosVC.scenarioTitleColor = selectedFavorite.scenarioDetails.titleColor.color // ScenariosViewController daki title ın renk bilgisini aktarma
+            scenariosVC.scenarioLabelColor = selectedFavorite.scenarioDetails.lableColor.color
+            scenariosVC.solutionButtonColor = selectedFavorite.scenarioDetails.solutionButtonColor.color
+            scenariosVC.solutionButtonFrameColor = selectedFavorite.scenarioDetails.solutionButtonFrameColor.color
+            scenariosVC.scenarioCheckmarkButton = selectedFavorite.scenarioDetails.checkmarkButtonColor.color
            
             navigationController?.pushViewController(scenariosVC, animated: true) // Geçiş yap
             }
     
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
     
     
     

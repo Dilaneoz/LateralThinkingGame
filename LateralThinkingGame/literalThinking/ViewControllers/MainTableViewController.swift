@@ -23,18 +23,18 @@ class MainTableViewController: UITableViewController {
     
     let sectionNames = ["Mystery & Crime", "Supernatural", "Science & Technology","Everyday Life","Nature & Environment"]
     
-    let sectionTitleColorsMain: [[UIColor]] = [[.black, .black, .systemBackground, .black, .systemBackground, .systemBackground, .systemBackground, .black, .systemBackground, .systemBackground],
-        [.systemBackground, .systemBackground, .black],
-        [.black, .black, .systemBackground, .systemBackground, .black],
+    let sectionTitleColorsMain: [[UIColor]] = [[.black, .black, .white, .black, .white, .white, .white, .black, .white, .white],
+        [.white, .white, .black],
+        [.black, .black, .white, .white, .black],
         [],
         []]
-    /*
-    let checkmarkButton: [[UIColor]] = [[.systemIndigo, .systemIndigo, .systemBackground, .systemIndigo],
-    [.systemBackground, .systemBackground, .systemIndigo],
+    
+    let checkmarkButton: [[UIColor]] = [[.black, .black, .white, .black],
+    [.white, .white, .black],
     [],
     [],
     []]
-    
+    /*
     let favoritesButton: [[UIColor]] = [[.systemIndigo, .systemIndigo, .systemBackground, .systemIndigo, .systemBackground, .systemBackground, .systemBackground, .systemIndigo, .systemBackground, .systemBackground],
     [.systemBackground, .systemBackground, .systemIndigo],
     [],
@@ -65,6 +65,13 @@ class MainTableViewController: UITableViewController {
             tabBarController.tabBar.items?[1].image = tabBarItemImage // 0, ilk item'ı temsil eder
         }
     
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if MusicPlayer.shared.isPlaying { // müziğin sesini azaltarak durdur
+            MusicPlayer.shared.fadeOutMusic()
+        }
     }
 }
 
@@ -110,7 +117,7 @@ extension MainTableViewController {
                     destinationVC.sectionName = sectionNames[section] // navigation bar daki başlıklar
                     destinationVC.sectionTitleColors = sectionTitleColorsMain[section] // Her label için farklı renk atama
                     destinationVC.selectedSection = section // Seçilen section bilgisini DetailsCollectionViewController'a aktar
-           //         destinationVC.detailsCheckmarkButton = checkmarkButton[section]
+                    destinationVC.detailsCheckmarkButton = checkmarkButton[section]
            //         destinationVC.detailsFavoriteButton = favoritesButton[section]
                 }
             }

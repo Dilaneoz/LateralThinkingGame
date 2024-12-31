@@ -16,6 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+        // Uygulama başlatıldığında, UserDefaults'dan tema bilgisini al
+        let darkModeEnabled = UserDefaults.standard.bool(forKey: "switch_1")
+                
+        // Eğer switch ON ise Dark Mode'a geç, OFF ise Light Mode'a geç
+        if darkModeEnabled {
+            window?.overrideUserInterfaceStyle = .dark
+        } else {
+            window?.overrideUserInterfaceStyle = .light
+        }
+        
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
